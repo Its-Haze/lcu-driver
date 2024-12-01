@@ -168,8 +168,8 @@ class Connection:
 
         :return: None
         """
-        # 8MB
-        MAX_WS_MSG_SIZE = 8 * 1024 * 1024
+        # 64MB
+        MAX_WS_MSG_SIZE = 1 * 1024 * 1024
 
         local_session = aiohttp.ClientSession(auth=aiohttp.BasicAuth('riot', self._auth_key),
                                               headers={'Content-Type': 'application/json',
