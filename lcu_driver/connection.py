@@ -168,9 +168,9 @@ class Connection:
 
         :return: None
         """
-        # 64MB
-        MAX_WS_MSG_SIZE = 64 * 1024 * 1024
-
+        # 8MB
+        MAX_WS_MSG_SIZE = 8 * 1024 * 1024
+        from rich import inspect
         local_session = aiohttp.ClientSession(auth=aiohttp.BasicAuth('riot', self._auth_key),
                                               headers={'Content-Type': 'application/json',
                                                        'Accept': 'application/json'})
@@ -181,6 +181,9 @@ class Connection:
         while self.closed == False:
             msg = await self._ws.receive()
             logger.debug('Websocket frame received')
+
+            if msg.type != aiohttp.WSMsgType.TEXT:
+                inspect(msg)
 
             if msg.type == aiohttp.WSMsgType.TEXT:
                 try:
